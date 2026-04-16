@@ -1,0 +1,37 @@
+Hey buddy, I've recently developed a Music App named "Sonara" the reason why i will develop this is because its not on Playstore.
+and i wanna build a websiter where users can download it, i already have a GitHub for apk updates but some users dont understand how GitHub works thats why i wanna build a compact lightweight modern web design for my sonara where users can see what are sonara, how do it works, how it compares to other streaming app, and where they can download the apk
+
+Stack:
+
+html
+css
+java
+or what ever is the best for the following:
+
+Clean modern design with certain Animations such:
+Animated Content
+Targer Cursur
+click spark 
+scroll stack
+Magic Bento
+Circular Gallery 
+tilted card
+masonry 
+glass surface
+border glow 
+card swap
+Flowing Menu
+prism Hover (Background)
+split text animations
+
+all this effect can be found at www.reactbits.dev
+
+
+use this fonts for one of the main Fonts
+- SF Pro 
+- SF Pro Bold
+
+
+Color theme: 
+White and Black
+"Modern Black And White Theme Websites"

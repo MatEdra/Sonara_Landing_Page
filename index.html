@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonara - Modern Music Streaming</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Sonara</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#screenshots" class="nav-link">Screenshots</a></li>
+                <li><a href="#design" class="nav-link">UI Design</a></li>
+                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="#download" class="nav-link download-btn">Download</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="split-text-gsap hero-title-horizontal">
+                    Experience Premium Music
+                </h1>
+                <p class="animated-subtitle">A modern music streaming experience, built for you</p>
+                <button class="glass-surface-button click-spark-btn">Get Sonara Now</button>
+            </div>
+            <div class="hero-visual">
+                <div class="card-swap-gallery">
+                    <div class="gallery-item" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span>Music</span>
+                    </div>
+                    <div class="gallery-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <span>Stream</span>
+                    </div>
+                    <div class="gallery-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <span>Enjoy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title-gsap">Features</h2>
+        <div class="features-grid">
+            <div class="feature-card glass-surface border-glow" data-index="0">
+                <div class="feature-icon"><i class="fas fa-music"></i></div>
+                <h3>High Quality Audio</h3>
+                <p>Stream your favorite music in crystal clear quality</p>
+            </div>
+            <div class="feature-card glass-surface border-glow" data-index="1">
+                <div class="feature-icon"><i class="fas fa-headphones"></i></div>
+                <h3>Offline Listening</h3>
+                <p>Download tracks and listen without internet</p>
+            </div>
+            <div class="feature-card glass-surface border-glow" data-index="2">
+                <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                <h3>Smart Recommendations</h3>
+                <p>Discover music tailored to your taste</p>
+            </div>
+            <div class="feature-card glass-surface border-glow" data-index="3">
+                <div class="feature-icon"><i class="fas fa-globe"></i></div>
+                <h3>Global Library</h3>
+                <p>Access millions of songs from around the world</p>
+            </div>
+            <div class="feature-card glass-surface border-glow" data-index="4">
+                <div class="feature-icon"><i class="fas fa-share-nodes"></i></div>
+                <h3>Social Sharing</h3>
+                <p>Share playlists with friends and collaborate</p>
+            </div>
+            <div class="feature-card glass-surface border-glow" data-index="5">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Lightning Fast</h3>
+                <p>Lightweight and optimized for all devices</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="screenshots">
+        <h2 class="section-title-gsap">See Sonara In Action</h2>
+        <div class="screenshots-container">
+            <!-- Masonry Gallery (Left) -->
+            <div class="masonry-wrapper">
+                <div class="brick-masonry" id="masonry-gallery">
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
+                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
+                </div>
+            </div>
+
+            <!-- Description Panel (Right) -->
+            <div class="description-panel">
+                <div class="description-content">
+                    <h3>Infinite Music Discovery</h3>
+                    <p>Sonara boasts an unparalleled collection of millions of songs spanning every genre, era, and style imaginable. Whether you're into classical symphonies, contemporary pop, underground hip-hop, or experimental electronic music, our vast library ensures there's always something new to discover. With music from independent artists to chart-topping superstars, Sonara brings the entire world of music to your fingertips. Stream high-quality audio from artists across the globe and explore music that speaks to your soul.</p>
+                    <p>Our intelligent recommendation system learns your musical preferences and continuously surfaces new tracks and artists tailored to your unique taste. Dive deeper into your favorite genres, discover hidden gems from emerging artists, or explore completely new musical territories. From curated playlists to personalized stations, Sonara makes it effortless to find your next favorite song. With unlimited streaming and offline downloads, your entire musical journey is just a click away.</p>
+                    <p>We believe in empowering artists from every corner of the globe. Sonara provides independent musicians with a platform to reach devoted listeners, breaking down barriers between creators and fans. Every artist in our library, whether established or emerging, gets equal opportunity to showcase their work. Our commitment to fair compensation and artist support ensures that your streams directly contribute to the livelihood of the musicians you love, fostering a vibrant and thriving music ecosystem.</p>
+                    <p>Experience music on your own terms with Sonara's flexible platform. Whether you're commuting, working out, studying, or relaxing at home, access your favorite tracks instantly across all your devices. Our lightning-fast streaming ensures uninterrupted playback, while our offline download feature lets you enjoy premium audio quality anywhere, anytime. Join millions of music lovers worldwide who have already discovered that Sonara isn't just a music streaming app—it's your personal gateway to the infinite world of music.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Circular Gallery Section -->
+    <section class="circular-gallery-section">
+        <div id="circular-gallery-container" style="height: 600px; position: relative; width: 100%;"></div>
+    </section>
+
+    <!-- Artist Library Description Section -->
+    <section class="library-description-section">
+        <div class="library-description-container">
+            <h2>Discover Our Vast Artist Library</h2>
+            <p>Sonara brings together millions of artists from every corner of the globe, offering an unparalleled collection of music across all genres and eras. Whether you're searching for the latest chart-toppers or hidden gems from independent musicians, our extensive database ensures you'll always find something new to love. From mainstream sensations to underground producers, Sonara's artist library celebrates the diversity of music and gives every creator a platform to shine.</p>
+
+            <p>Our commitment to musical diversity means you'll discover artists spanning classical symphonies to electronic beats, traditional folk melodies to contemporary rap collaborations. We partner directly with independent artists and major record labels alike, ensuring that our collection is constantly updated with fresh releases and timeless classics. Every artist in our library has been carefully curated to guarantee quality, authenticity, and artistic integrity across all categories.</p>
+
+            <p>With Sonara's intelligent recommendation engine, finding your next favorite artist has never been easier. Our advanced algorithms learn your musical preferences and suggest artists that align with your unique taste, helping you explore new sounds while staying connected to what you love. Whether you're in the mood for uplifting pop hits, soulful R&B, energetic rock anthems, or ambient instrumental tracks, Sonara seamlessly connects you with the perfect artists for every moment.</p>
+
+            <p>The beauty of Sonara's artist library lies in its commitment to supporting creators worldwide. We believe that every artist deserves recognition and the opportunity to reach their audience, regardless of their background or location. Through our platform, independent musicians gain exposure, established artists connect with dedicated fans, and music lovers everywhere discover the soundtrack to their lives. Join millions of listeners who are already exploring the boundless world of music on Sonara.</p>
+        </div>
+    </section>
+
+    <!-- UI Design Section -->
+    <section id="design" class="ui-design">
+        <h2 class="section-title-gsap">Beautiful & Intuitive UI</h2>
+        <div class="design-showcase">
+            <div class="design-item">
+                <h3>Color Palette</h3>
+                <div class="color-swatches">
+                    <div class="swatch" style="background: #1a1a1a;" title="Deep Black"></div>
+                    <div class="swatch" style="background: #5227ff;" title="Vibrant Purple"></div>
+                    <div class="swatch" style="background: #00f2fe;" title="Electric Blue"></div>
+                    <div class="swatch" style="background: #fff;" title="White"></div>
+                    <div class="swatch" style="background: #a3a3a3;" title="Gray"></div>
+                </div>
+            </div>
+            <div class="design-item">
+                <h3>Typography</h3>
+                <div class="typography-showcase">
+                    <p class="font-sample-h1">Heading Large</p>
+                    <p class="font-sample-h2">Heading Medium</p>
+                    <p class="font-sample-body">Body text for readability</p>
+                </div>
+            </div>
+            <div class="design-item">
+                <h3>Components</h3>
+                <div class="components-showcase">
+                    <button class="glass-surface-button">Play Button</button>
+                    <button class="glass-surface-button">Secondary</button>
+                    <div class="badge">Premium Feature</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <h2 class="section-title-gsap">How It Works</h2>
+        <div id="stepper-container" class="stepper-container"></div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="comparison">
+        <h2 class="section-title-gsap">Why Choose Sonara?</h2>
+        <div class="comparison-grid">
+            <div class="comparison-item masonry-item">
+                <h3>Sonara</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Lightweight & Fast</li>
+                    <li><i class="fas fa-check"></i> Free & Open</li>
+                    <li><i class="fas fa-check"></i> No Ads</li>
+                    <li><i class="fas fa-check"></i> Offline Download</li>
+                    <li><i class="fas fa-check"></i> Custom Playlists</li>
+                </ul>
+            </div>
+            <div class="comparison-item masonry-item highlight">
+                <h3>Other Apps</h3>
+                <ul>
+                    <li><i class="fas fa-times"></i> Heavy & Slow</li>
+                    <li><i class="fas fa-times"></i> Requires Subscription</li>
+                    <li><i class="fas fa-times"></i> Full of Ads</li>
+                    <li><i class="fas fa-times"></i> Limited Downloads</li>
+                    <li><i class="fas fa-times"></i> Restricted Features</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download-section">
+        <div class="download-container">
+            <h2 class="section-title-gsap">Ready To Stream?</h2>
+            <p>Download Sonara now and join thousands of happy music lovers</p>
+            <div class="download-buttons">
+                <button class="glass-surface-button click-spark-btn cursor-target">Download APK</button>
+                <button class="glass-surface-button click-spark-btn cursor-target">View on GitHub</button>
+            </div>
+            <div class="security-badge">
+                <span><i class="fas fa-shield-check"></i> Safe & Secure</span>
+                <span><i class="fas fa-ban"></i> No Ads</span>
+                <span><i class="fas fa-check-circle"></i> Ad-Free Experience</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Sonara. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Canvas for cursor effects -->
+    <canvas id="cursor-canvas"></canvas>
+
+    <script src="advanced-animations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
