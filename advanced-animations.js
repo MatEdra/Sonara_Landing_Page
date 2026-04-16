@@ -109,7 +109,10 @@ class SplitTextGSAP {
                 el.innerHTML = charArray.join(' ');
             } else {
                 // For vertical/regular titles, split by characters
-                charArray = text.split('').map((char) => `<span class="split-char">${char}</span>`);
+                charArray = text.split('').map((char) => {
+                    if (char === ' ') return `<span class="split-char" style="display:inline-block;width:0.3em">&nbsp;</span>`;
+                    return `<span class="split-char">${char}</span>`;
+                });
                 el.innerHTML = charArray.join('');
             }
 
@@ -1112,12 +1115,12 @@ class Stepper {
         this.stepFooterContainer.querySelector('.next-button').addEventListener('click', () => {
             if (isLastStep) {
                 this.currentStep++;
-                this.onFinalStepCompleted();
                 this.renderStepIndicators();
                 gsap.to(this.stepContentContainer, { opacity: 0, y: -20, duration: 0.3 });
+                this.stepFooterContainer.innerHTML = '';
                 setTimeout(() => {
-                    this.stepFooterContainer.innerHTML = '';
-                }, 300);
+                    this.onFinalStepCompleted(this.stepContentContainer);
+                }, 320);
             } else {
                 this.goToStep(this.currentStep + 1);
             }
@@ -1135,6 +1138,90 @@ class Stepper {
         this.renderStepContent();
         this.renderFooter();
     }
+}
+
+// ========== POPULATE MUSIC GALLERY ==========
+async function populateMusicGallery() {
+    if (!window.musicService) {
+        console.warn('Music service not loaded');
+        return;
+    }
+
+    const artists = [
+        'Billie Eilish',
+        'Justin Bieber',
+        'Nicki Minaj',
+        'Imagine Dragons',
+        'Joji',
+        'Ben & Ben',
+        'Skusta Clee',
+        'Juan Karlos',
+        'Fitterkarma',
+        'Adie',
+        'Maximillian'
+    ];
+
+    const masonryContainer = document.getElementById('masonry-gallery');
+    if (!masonryContainer) {
+        console.warn('Masonry container not found');
+        return;
+    }
+
+    // Clear existing masonry items
+    masonryContainer.innerHTML = '';
+
+    // Fetch and populate data for each artist
+    for (const artistName of artists) {
+        const data = await window.musicService.getMusicData(artistName);
+
+        if (data && data.tracks.length > 0) {
+            // Create masonry item for each track
+            data.tracks.forEach((track, trackIndex) => {
+                const masonryItem = document.createElement('div');
+                masonryItem.className = 'masonry-item';
+                masonryItem.style.opacity = '1'; // Make immediately visible
+
+                const massonryImage = document.createElement('div');
+                massonryImage.className = 'masonry-image';
+
+                // Use solid colors as fallback while testing
+                const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B88B', '#B19CD9'];
+                const color = colors[trackIndex % colors.length];
+
+                massonryImage.style.backgroundColor = color;
+                massonryImage.style.backgroundImage = `url('${track.image}')`;
+                massonryImage.style.backgroundSize = 'cover';
+                massonryImage.style.backgroundPosition = 'center';
+                massonryImage.style.display = 'flex';
+                massonryImage.style.alignItems = 'center';
+                massonryImage.style.justifyContent = 'center';
+                massonryImage.style.color = 'white';
+                massonryImage.style.fontSize = '14px';
+                massonryImage.style.fontWeight = 'bold';
+                massonryImage.textContent = track.name;
+
+                masonryItem.appendChild(massonryImage);
+                masonryContainer.appendChild(masonryItem);
+            });
+        }
+    }
+
+    console.log(`✨ Populated ${masonryContainer.children.length} music items`);
+
+    // Small delay to ensure DOM is updated
+    setTimeout(() => {
+        // Re-initialize the Masonry layout with the new items
+        new Masonry('#masonry-gallery', {
+            ease: 'power3.out',
+            duration: 0.6,
+            stagger: 0.05,
+            animateFrom: 'bottom',
+            scaleOnHover: true,
+            hoverScale: 0.95,
+            blurToFocus: true,
+            colorShiftOnHover: false
+        });
+    }, 100);
 }
 
 // ========== GLASS SURFACE EFFECT ==========
@@ -1228,7 +1315,7 @@ function initializeAdvancedAnimations() {
         threshold: 0.1
     });
 
-    // Initialize Masonry Gallery
+    // Initialize Masonry Gallery animations
     new Masonry('#masonry-gallery', {
         ease: 'power3.out',
         duration: 0.6,
@@ -1267,10 +1354,43 @@ function initializeAdvancedAnimations() {
     // Initialize Stepper
     new Stepper({
         container: document.getElementById('stepper-container'),
-        initialStep: 1
+        initialStep: 1,
+        steps: [
+            {
+                title: 'Download Sonara',
+                description: 'Get the latest Sonara APK from our website or directly from our <strong>GitHub Releases</strong> page. No account required to download.'
+            },
+            {
+                title: 'Install the App',
+                description: 'Open the APK and follow the installation steps. <strong>Important:</strong> If Google Play Protect asks to scan the app, tap <em>"Install without scanning"</em> or <em>"Install anyway"</em> — do <strong>not</strong> allow the scan. Sonara is not yet fully signed, so the scan will cancel the installation.'
+            },
+            {
+                title: 'Log In with Google',
+                description: 'Launch Sonara and tap <strong>Log In</strong>. Sonara will display a short code. Open your browser and go to <strong>google.com/device</strong>, sign in to your Google account, then paste or type the code there and confirm. You\'re in!'
+            },
+            {
+                title: 'Start Streaming',
+                description: 'You\'re all set! Explore your library, discover new music, and enjoy Sonara. Ready to get started?'
+            }
+        ],
+        onFinalStepCompleted: (contentEl) => {
+            contentEl.innerHTML = `
+                <div class="step-default stepper-complete-notice">
+                    <h2>You're all set! 🎉</h2>
+                    <p>Scroll down to find the <strong>Download</strong> button and get Sonara on your device.</p>
+                    <button class="stepper-scroll-btn" onclick="document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })">Take me there ↓</button>
+                </div>
+            `;
+            gsap.fromTo(contentEl, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+        }
     });
 
     console.log('✨ Advanced Animations Loaded Successfully!');
+
+    // Load real album art from Deezer API (replaces gradient fallbacks)
+    if (typeof loadMusicThumbnails === 'function') {
+        loadMusicThumbnails();
+    }
 }
 
 // ========== CIRCULAR GALLERY ==========
@@ -1290,18 +1410,24 @@ class CircularGallery {
 
         this.scroll = { ease: this.options.scrollEase, current: 0, target: 0, last: 0 };
         this.isDown = false;
+        this.isHovering = false;
         this.velocity = 0;
         this.init();
     }
 
     getDefaultItems() {
         return [
-            { image: `https://picsum.photos/seed/1/800/600?grayscale`, text: 'Stream' },
-            { image: `https://picsum.photos/seed/2/800/600?grayscale`, text: 'Listen' },
-            { image: `https://picsum.photos/seed/3/800/600?grayscale`, text: 'Enjoy' },
-            { image: `https://picsum.photos/seed/4/800/600?grayscale`, text: 'Discover' },
-            { image: `https://picsum.photos/seed/5/800/600?grayscale`, text: 'Music' },
-            { image: `https://picsum.photos/seed/6/800/600?grayscale`, text: 'Explore' }
+            { image: `./Artist/Billie Eilish.jpg`, text: 'Billie Eilish' },
+            { image: `./Artist/justin bieber.jpg`, text: 'Justin Bieber' },
+            { image: `./Artist/Niki minaj.jpg`, text: 'Nicki Minaj' },
+            { image: `./Artist/imagine dragons.jpg`, text: 'Imagine Dragons' },
+            { image: `./Artist/joji.jpg`, text: 'Joji' },
+            { image: `./Artist/ben n ben.jpg`, text: 'Ben & Ben' },
+            { image: `./Artist/Skusta Clee.jpg`, text: 'Skusta Clee' },
+            { image: `./Artist/Juan Karlos.jpg`, text: 'Juan Karlos' },
+            { image: `./Artist/Fitterkarma.jpg`, text: 'Fitterkarma' },
+            { image: `./Artist/adie.jpg`, text: 'Adie' },
+            { image: `./Artist/maximillian.jpg`, text: 'Maximillian' }
         ];
     }
 
@@ -1379,23 +1505,31 @@ class CircularGallery {
     }
 
     update() {
-        // Smooth easing
-        this.scroll.current += (this.scroll.target - this.scroll.current) * this.scroll.ease;
+        // Smooth easing with higher precision
+        const diff = this.scroll.target - this.scroll.current;
 
-        // Update positions with 3D transform
-        this.items.forEach((item, index) => {
-            const angle = (this.scroll.current + index * 45) * (Math.PI / 180);
-            const radius = 400;
-            const x = Math.sin(angle) * radius;
-            const z = Math.cos(angle) * radius - radius;
-            const rotY = -angle * (180 / Math.PI);
+        // Only update if there's a meaningful difference
+        if (Math.abs(diff) > 0.001) {
+            this.scroll.current += diff * this.scroll.ease;
+        } else {
+            this.scroll.current = this.scroll.target;
+        }
 
-            item.style.transform = `
-                translateX(${x}px)
-                translateZ(${z}px)
-                rotateY(${rotY}deg)
-            `;
-        });
+        // Only update DOM if scroll position actually changed
+        if (Math.abs(this.scroll.current - this.scroll.last) > 0.01) {
+            this.scroll.last = this.scroll.current;
+
+            // Update positions with 3D transform
+            this.items.forEach((item, index) => {
+                const angle = (this.scroll.current + index * 45) * (Math.PI / 180);
+                const radius = 400;
+                const x = Math.sin(angle) * radius;
+                const z = Math.cos(angle) * radius - radius;
+                const rotY = -angle * (180 / Math.PI);
+
+                item.style.transform = `translateX(${x.toFixed(1)}px) translateZ(${z.toFixed(1)}px) rotateY(${rotY.toFixed(2)}deg)`;
+            });
+        }
 
         this.raf = requestAnimationFrame(() => this.update());
     }
@@ -1424,7 +1558,39 @@ class CircularGallery {
         this.velocity = (delta > 0 ? this.options.scrollSpeed : -this.options.scrollSpeed) * 2;
     }
 
+    onMouseEnter() {
+        this.isHovering = true;
+    }
+
+    onMouseMove(e) {
+        // Only apply hover effect when not dragging
+        if (this.isDown) return;
+
+        const rect = this.carousel.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const width = rect.width;
+
+        // Map cursor position to scroll rotation (0 to 100% width = -180 to 180 degrees)
+        const normalizedX = (x / width) - 0.5;
+        const targetRotation = normalizedX * 360;
+
+        // Smooth interpolation with reduced factor to prevent jitter
+        this.scroll.target += (targetRotation - this.scroll.target) * 0.1;
+    }
+
+    onMouseLeave() {
+        // Only return to center if not dragging
+        if (this.isDown) return;
+
+        this.isHovering = false;
+        // Smoothly return to center
+        this.scroll.target = 0;
+    }
+
     onPageScroll() {
+        // Disable page scroll effect when hovering
+        if (this.isHovering) return;
+
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const gallerySectionTop = this.container.offsetTop;
         const gallerySectionHeight = this.container.offsetHeight;
@@ -1443,6 +1609,9 @@ class CircularGallery {
         this.boundTouchMove = this.onTouchMove.bind(this);
         this.boundTouchUp = this.onTouchUp.bind(this);
         this.boundPageScroll = this.onPageScroll.bind(this);
+        this.boundMouseEnter = this.onMouseEnter.bind(this);
+        this.boundMouseMove = this.onMouseMove.bind(this);
+        this.boundMouseLeave = this.onMouseLeave.bind(this);
 
         this.carousel.addEventListener('wheel', this.boundWheel, { passive: false });
         this.carousel.addEventListener('mousedown', this.boundTouchDown);
@@ -1452,6 +1621,11 @@ class CircularGallery {
         document.addEventListener('touchmove', this.boundTouchMove);
         document.addEventListener('touchend', this.boundTouchUp);
         window.addEventListener('scroll', this.boundPageScroll, { passive: true });
+
+        // Add hover-based mouse movement
+        this.carousel.addEventListener('mouseenter', this.boundMouseEnter);
+        this.carousel.addEventListener('mousemove', this.boundMouseMove);
+        this.carousel.addEventListener('mouseleave', this.boundMouseLeave);
     }
 
     destroy() {
@@ -1464,6 +1638,9 @@ class CircularGallery {
         document.removeEventListener('touchmove', this.boundTouchMove);
         document.removeEventListener('touchend', this.boundTouchUp);
         window.removeEventListener('scroll', this.boundPageScroll);
+        this.carousel.removeEventListener('mouseenter', this.boundMouseEnter);
+        this.carousel.removeEventListener('mousemove', this.boundMouseMove);
+        this.carousel.removeEventListener('mouseleave', this.boundMouseLeave);
     }
 }
 

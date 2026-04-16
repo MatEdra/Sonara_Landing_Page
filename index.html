@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Sonara - Modern Music Streaming Platform. Experience premium music streaming with glassmorphism UI, offline capabilities, and more.">
     <title>Sonara - Modern Music Streaming</title>
+
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ProfileCard.css">
+    <link rel="stylesheet" href="ChromaGrid.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
     <!-- GSAP Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -21,39 +35,40 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
+                <img src="./Logo/logo.png" alt="Sonara" class="nav-logo" loading="lazy">
                 <h1>Sonara</h1>
             </div>
-            <ul class="nav-menu">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
                 <li><a href="#features" class="nav-link">Features</a></li>
                 <li><a href="#screenshots" class="nav-link">Screenshots</a></li>
-                <li><a href="#design" class="nav-link">UI Design</a></li>
+                <li><a href="#contributors" class="nav-link">Contributors</a></li>
                 <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-                <li><a href="#download" class="nav-link download-btn">Download</a></li>
+                <li><a href="javascript:void(0);" class="nav-link download-btn" onclick="scrollToDownload(); return false;">Download</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
+        <div id="hero-silk-bg"></div>
         <div class="hero-content">
             <div class="hero-text">
                 <h1 class="split-text-gsap hero-title-horizontal">
                     Experience Premium Music
                 </h1>
                 <p class="animated-subtitle">A modern music streaming experience, built for you</p>
-                <button class="glass-surface-button click-spark-btn">Get Sonara Now</button>
+                <button class="glass-surface-button click-spark-btn" onclick="scrollToDownload()">Get Sonara Now</button>
             </div>
             <div class="hero-visual">
                 <div class="card-swap-gallery">
-                    <div class="gallery-item" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                        <span>Music</span>
-                    </div>
-                    <div class="gallery-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                        <span>Stream</span>
-                    </div>
-                    <div class="gallery-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                        <span>Enjoy</span>
-                    </div>
+                    <div class="gallery-item" style="background-image: url('./Screenshots/Screenshot_20260416_193445.png');"></div>
+                    <div class="gallery-item" style="background-image: url('./Screenshots/Screenshot_20260416_193527.png');"></div>
+                    <div class="gallery-item" style="background-image: url('./Screenshots/Screenshot_20260416_193620.png');"></div>
                 </div>
             </div>
         </div>
@@ -98,32 +113,40 @@
 
     <!-- Screenshots Section -->
     <section id="screenshots" class="screenshots">
+        <div id="beams-bg"></div>
         <h2 class="section-title-gsap">See Sonara In Action</h2>
         <div class="screenshots-container">
             <!-- Masonry Gallery (Left) -->
             <div class="masonry-wrapper">
                 <div class="brick-masonry" id="masonry-gallery">
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #666 0%, #444 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #777 0%, #555 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #444 0%, #222 100%);"></div></div>
-                    <div class="masonry-item"><div class="masonry-image" style="background: linear-gradient(135deg, #555 0%, #333 100%);"></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/3/33/Billie_Eilish_-_Bad_Guy.png');background-size:cover;background-position:center"><span class="mc-title">Bad Guy</span><span class="mc-artist">Billie Eilish</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/4/4b/Billie_Eilish_-_Therefore_I_Am.png');background-size:cover;background-position:center"><span class="mc-title">Therefore I Am</span><span class="mc-artist">Billie Eilish</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/b/ba/Billie_Eilish_-_Ocean_Eyes.png');background-size:cover;background-position:center"><span class="mc-title">Ocean Eyes</span><span class="mc-artist">Billie Eilish</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/0/0a/Justin_Bieber_-_Peaches.png');background-size:cover;background-position:center"><span class="mc-title">Peaches</span><span class="mc-artist">Justin Bieber</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/d/dc/Justin_Bieber_-_Sorry_%28Official_Single_Cover%29.png');background-size:cover;background-position:center"><span class="mc-title">Sorry</span><span class="mc-artist">Justin Bieber</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/0/0b/JustinBieberLoveYourself.png');background-size:cover;background-position:center"><span class="mc-title">Love Yourself</span><span class="mc-artist">Justin Bieber</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/e/e3/Superbass_single_cover.png');background-size:cover;background-position:center"><span class="mc-title">Super Bass</span><span class="mc-artist">Nicki Minaj</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/2/20/Nicki_Minaj_Anaconda.png');background-size:cover;background-position:center"><span class="mc-title">Anaconda</span><span class="mc-artist">Nicki Minaj</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/9/91/Imagine_Dragons_-_%22Radioactive%22_%28Single%29.jpg');background-size:cover;background-position:center"><span class="mc-title">Radioactive</span><span class="mc-artist">Imagine Dragons</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/5/5c/Imagine-Dragons-Believer-art.jpg');background-size:cover;background-position:center"><span class="mc-title">Believer</span><span class="mc-artist">Imagine Dragons</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/2/28/Imagine_Dragons_Thunder.jpg');background-size:cover;background-position:center"><span class="mc-title">Thunder</span><span class="mc-artist">Imagine Dragons</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/4/4a/Joji_-_Glimpse_of_Us.png');background-size:cover;background-position:center"><span class="mc-title">Glimpse of Us</span><span class="mc-artist">Joji</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/0/01/Slow_Dancing_in_the_Dark.jpg');background-size:cover;background-position:center"><span class="mc-title">Slow Dancing in the Dark</span><span class="mc-artist">Joji</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/a/ad/Joji_-_Run.png');background-size:cover;background-position:center"><span class="mc-title">Run</span><span class="mc-artist">Joji</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/ben n ben.jpg');background-size:cover;background-position:center"><span class="mc-title">Kathang Isip</span><span class="mc-artist">Ben & Ben</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/ben n ben.jpg');background-size:cover;background-position:center"><span class="mc-title">Maybe the Night</span><span class="mc-artist">Ben & Ben</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/Skusta Clee.jpg');background-size:cover;background-position:center"><span class="mc-title">Amatz</span><span class="mc-artist">Skusta Clee</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/Juan Karlos.jpg');background-size:cover;background-position:center"><span class="mc-title">Sana</span><span class="mc-artist">Juan Karlos</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/adie.jpg');background-size:cover;background-position:center"><span class="mc-title">Mahika</span><span class="mc-artist">Adie</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/maximillian.jpg');background-size:cover;background-position:center"><span class="mc-title">Alalay</span><span class="mc-artist">Maximillian</span></div></div>
+                    <!-- Adie -->
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/adie.jpg');background-size:cover;background-position:center"><span class="mc-title">Mahika</span><span class="mc-artist">Adie</span></div></div>
+                    <!-- Maximillian -->
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/maximillian.jpg');background-size:cover;background-position:center"><span class="mc-title">Alalay</span><span class="mc-artist">Maximillian</span></div></div>
+                    <!-- Billie + Joji repeat to fill row -->
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/Billie Eilish.jpg');background-size:cover;background-position:center"><span class="mc-title">Therefore I Am</span><span class="mc-artist">Billie Eilish</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/joji.jpg');background-size:cover;background-position:center"><span class="mc-title">Slow Dancing</span><span class="mc-artist">Joji</span></div></div>
+                    <div class="masonry-item" style="opacity:1"><div class="masonry-image music-card" style="background-image:url('./Artist/imagine dragons.jpg');background-size:cover;background-position:center"><span class="mc-title">Thunder</span><span class="mc-artist">Imagine Dragons</span></div></div>
                 </div>
             </div>
 
@@ -159,41 +182,55 @@
         </div>
     </section>
 
-    <!-- UI Design Section -->
-    <section id="design" class="ui-design">
-        <h2 class="section-title-gsap">Beautiful & Intuitive UI</h2>
-        <div class="design-showcase">
-            <div class="design-item">
-                <h3>Color Palette</h3>
-                <div class="color-swatches">
-                    <div class="swatch" style="background: #1a1a1a;" title="Deep Black"></div>
-                    <div class="swatch" style="background: #5227ff;" title="Vibrant Purple"></div>
-                    <div class="swatch" style="background: #00f2fe;" title="Electric Blue"></div>
-                    <div class="swatch" style="background: #fff;" title="White"></div>
-                    <div class="swatch" style="background: #a3a3a3;" title="Gray"></div>
+    <!-- Meet Developer Section -->
+    <section id="developers" class="developers-section">
+        <canvas id="code-particles-canvas"></canvas>
+        <h2 class="section-title-gsap">Meet Developer</h2>
+        <div class="developers-container">
+            <div class="pc-card-wrapper" style="--icon: none; --grain: none; --inner-gradient: linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%); --behind-glow-color: rgba(125, 190, 255, 0.67); --behind-glow-size: 50%;">
+                <div class="pc-behind"></div>
+                <div class="pc-card-shell">
+                    <section class="pc-card">
+                        <div class="pc-inside">
+                            <div class="pc-shine"></div>
+                            <div class="pc-glare"></div>
+                            <div class="pc-content pc-avatar-content">
+                                <img class="avatar" src="./Persons/Mat Edra - Lead Developer.jpg" alt="Mat Edra avatar" loading="lazy" loading="lazy">
+                                <div class="pc-user-info">
+                                    <div class="pc-user-details">
+                                        <div class="pc-mini-avatar">
+                                            <img src="./Persons/Mat Edra - Lead Developer.jpg" alt="Mat Edra mini avatar" loading="lazy" loading="lazy">
+                                        </div>
+                                        <div class="pc-user-text">
+                                            <div class="pc-handle">@MatEdra</div>
+                                            <div class="pc-status">Active</div>
+                                        </div>
+                                    </div>
+                                    <button class="pc-contact-btn" style="pointer-events: auto;" type="button" aria-label="Contact Mat Edra" onclick="window.open('https://www.facebook.com/reymart.edra', '_blank')">Contact</button>
+                                </div>
+                            </div>
+                            <div class="pc-content">
+                                <div class="pc-details">
+                                    <h3>Mat Edra</h3>
+                                    <p>Chamba Developer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
-            <div class="design-item">
-                <h3>Typography</h3>
-                <div class="typography-showcase">
-                    <p class="font-sample-h1">Heading Large</p>
-                    <p class="font-sample-h2">Heading Medium</p>
-                    <p class="font-sample-body">Body text for readability</p>
-                </div>
-            </div>
-            <div class="design-item">
-                <h3>Components</h3>
-                <div class="components-showcase">
-                    <button class="glass-surface-button">Play Button</button>
-                    <button class="glass-surface-button">Secondary</button>
-                    <div class="badge">Premium Feature</div>
-                </div>
-            </div>
+        </div>
+        <div class="developers-description">
+            <p>Meet Mat Edra, a passionate Chamba Developer who brings innovation and expertise to the Sonara project. With a dedication to building intuitive and performant applications, Mat contributes to making music streaming accessible to everyone. Always learning, always coding, always improving.</p>
+        </div>
+        <div class="chroma-grid-wrapper">
+            <div id="chroma-grid-container"></div>
         </div>
     </section>
 
 <!-- How It Works Section -->
     <section id="how-it-works" class="how-it-works">
+        <div id="aurora-bg"></div>
         <h2 class="section-title-gsap">How It Works</h2>
         <div id="stepper-container" class="stepper-container"></div>
     </section>
@@ -202,25 +239,40 @@
     <section id="comparison" class="comparison">
         <h2 class="section-title-gsap">Why Choose Sonara?</h2>
         <div class="comparison-grid">
-            <div class="comparison-item masonry-item">
-                <h3>Sonara</h3>
-                <ul>
-                    <li><i class="fas fa-check"></i> Lightweight & Fast</li>
-                    <li><i class="fas fa-check"></i> Free & Open</li>
-                    <li><i class="fas fa-check"></i> No Ads</li>
-                    <li><i class="fas fa-check"></i> Offline Download</li>
-                    <li><i class="fas fa-check"></i> Custom Playlists</li>
-                </ul>
+            <div class="comparison-tilt-wrap">
+                <div class="comparison-item sonara-card">
+                    <h3>Sonara</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Glassmorphism UI</li>
+                        <li><i class="fas fa-check-circle"></i> YouTube Music Streaming</li>
+                        <li><i class="fas fa-check-circle"></i> Free & No Ads</li>
+                        <li><i class="fas fa-check-circle"></i> iOS-Style Animations</li>
+                        <li><i class="fas fa-check-circle"></i> Dark Mode + AMOLED</li>
+                        <li><i class="fas fa-check-circle"></i> Album-Art Player</li>
+                        <li><i class="fas fa-check-circle"></i> Multiple Streaming Sources</li>
+                        <li><i class="fas fa-check-circle"></i> Lightweight & Fast</li>
+                        <li><i class="fas fa-check-circle"></i> Genre Personalization</li>
+                        <li><i class="fas fa-check-circle"></i> No Subscription</li>
+                        <li><i class="fas fa-check-circle"></i> Community-Focused</li>
+                        <li><i class="fas fa-check-circle"></i> Offline Capability</li>
+                    </ul>
+                </div>
             </div>
-            <div class="comparison-item masonry-item highlight">
-                <h3>Other Apps</h3>
-                <ul>
-                    <li><i class="fas fa-times"></i> Heavy & Slow</li>
-                    <li><i class="fas fa-times"></i> Requires Subscription</li>
-                    <li><i class="fas fa-times"></i> Full of Ads</li>
-                    <li><i class="fas fa-times"></i> Limited Downloads</li>
-                    <li><i class="fas fa-times"></i> Restricted Features</li>
-                </ul>
+            <div class="comparison-tilt-wrap">
+                <div class="comparison-item other-apps-card">
+                    <h3>Other Apps</h3>
+                    <ul>
+                        <li><i class="fas fa-times-circle"></i> Expensive Subscriptions ($10-15/month)</li>
+                        <li><i class="fas fa-times-circle"></i> Ads Interrupting Playback</li>
+                        <li><i class="fas fa-times-circle"></i> Limited Free Features</li>
+                        <li><i class="fas fa-times-circle"></i> Corporate Control</li>
+                        <li><i class="fas fa-times-circle"></i> Data Collection & Tracking</li>
+                        <li><i class="fas fa-times-circle"></i> Artist Unfriendly Payouts</li>
+                        <li><i class="fas fa-times-circle"></i> No True Ownership of Music</li>
+                        <li><i class="fas fa-times-circle"></i> Limited Customization</li>
+                        <li><i class="fas fa-times-circle"></i> Lock-in to Ecosystem</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -231,9 +283,26 @@
             <h2 class="section-title-gsap">Ready To Stream?</h2>
             <p>Download Sonara now and join thousands of happy music lovers</p>
             <div class="download-buttons">
-                <button class="glass-surface-button click-spark-btn cursor-target">Download APK</button>
-                <button class="glass-surface-button click-spark-btn cursor-target">View on GitHub</button>
+                <button class="glass-surface-button click-spark-btn cursor-target" onclick="downloadLatestAPK()">Download APK</button>
+                <button class="glass-surface-button click-spark-btn cursor-target" onclick="window.open('https://github.com/MatEdra/Sonara', '_blank')">View on GitHub</button>
             </div>
+
+            <!-- Platform Availability -->
+            <div class="platform-availability">
+                <div class="platform-badge apple-badge">
+                    <i class="fab fa-apple"></i>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+                <div class="platform-badge android-badge">
+                    <i class="fab fa-android"></i>
+                    <span class="available">Available</span>
+                </div>
+                <div class="platform-badge windows-badge">
+                    <i class="fab fa-windows"></i>
+                    <span class="coming-soon">Coming Soon</span>
+                </div>
+            </div>
+
             <div class="security-badge">
                 <span><i class="fas fa-shield-check"></i> Safe & Secure</span>
                 <span><i class="fas fa-ban"></i> No Ads</span>
@@ -258,7 +327,31 @@
     <!-- Canvas for cursor effects -->
     <canvas id="cursor-canvas"></canvas>
 
+    <script defer src="music-api.js"></script>
+    <script defer src="Beams.js"></script>
+    <script defer src="Aurora.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initAurora('aurora-bg', {
+                colorStops: ['#da67ff', '#B497CF', '#ff2774'],
+                blend:      0.5,
+                amplitude:  1.0,
+                speed:      0.7,
+            });
+            initBeams('beams-bg', {
+                beamWidth: 4.3,
+                beamHeight: 15,
+                beamNumber: 12,
+                lightColor: '#ffffff',
+                speed: 0.8,
+                noiseIntensity: 1.15,
+                scale: 0.2,
+                rotation: 58
+            });
+        });
+    </script>
     <script src="advanced-animations.js"></script>
+    <script src="ChromaGrid.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

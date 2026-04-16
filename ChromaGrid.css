@@ -1,0 +1,281 @@
+.chroma-grid-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.chroma-grid-wrapper::-webkit-scrollbar {
+  height: 4px;
+}
+
+.chroma-grid-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chroma-grid-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+}
+
+.chroma-grid {
+  position: relative;
+  width: max-content;
+  height: auto;
+  display: grid;
+  grid-template-rows: repeat(var(--rows, 3), auto);
+  grid-auto-flow: column;
+  grid-auto-columns: 280px;
+  gap: 0.75rem;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  --x: 50%;
+  --y: 50%;
+  --r: 220px;
+}
+
+.chroma-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  height: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #333;
+  transition: border-color 0.3s ease, transform 1.2s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.6s ease;
+  background: var(--card-gradient);
+  transform-style: preserve-3d;
+  will-change: transform;
+
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-color: rgba(255, 255, 255, 0.3);
+}
+
+.chroma-card:hover {
+  border-color: var(--card-border);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px color-mix(in srgb, var(--card-border) 30%, transparent);
+}
+
+.chroma-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+
+.chroma-card:hover::before {
+  opacity: 1;
+}
+
+.chroma-img-wrapper {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  height: 280px;
+  padding: 10px;
+  box-sizing: border-box;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.chroma-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 10px;
+  display: block;
+}
+
+.chroma-info {
+  position: relative;
+  z-index: 1;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 0.25rem;
+  column-gap: 0.75rem;
+}
+
+.chroma-info .name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  grid-column: 1 / -1;
+}
+
+.chroma-info .role,
+.chroma-info .handle {
+  color: #aaa;
+  font-size: 13px;
+}
+
+.chroma-info .role {
+  grid-column: 1 / -1;
+}
+
+.chroma-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  backdrop-filter: grayscale(1) brightness(0.78);
+  -webkit-backdrop-filter: grayscale(1) brightness(0.78);
+  background: rgba(0, 0, 0, 0.001);
+
+  mask-image: radial-gradient(
+    circle var(--r) at var(--x) var(--y),
+    transparent 0%,
+    transparent 15%,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.22) 45%,
+    rgba(0, 0, 0, 0.35) 60%,
+    rgba(0, 0, 0, 0.5) 75%,
+    rgba(0, 0, 0, 0.68) 88%,
+    white 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle var(--r) at var(--x) var(--y),
+    transparent 0%,
+    transparent 15%,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.22) 45%,
+    rgba(0, 0, 0, 0.35) 60%,
+    rgba(0, 0, 0, 0.5) 75%,
+    rgba(0, 0, 0, 0.68) 88%,
+    white 100%
+  );
+}
+
+.chroma-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  backdrop-filter: grayscale(1) brightness(0.78);
+  -webkit-backdrop-filter: grayscale(1) brightness(0.78);
+  background: rgba(0, 0, 0, 0.001);
+
+  mask-image: radial-gradient(
+    circle var(--r) at var(--x) var(--y),
+    white 0%,
+    white 15%,
+    rgba(255, 255, 255, 0.9) 30%,
+    rgba(255, 255, 255, 0.78) 45%,
+    rgba(255, 255, 255, 0.65) 60%,
+    rgba(255, 255, 255, 0.5) 75%,
+    rgba(255, 255, 255, 0.32) 88%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle var(--r) at var(--x) var(--y),
+    white 0%,
+    white 15%,
+    rgba(255, 255, 255, 0.9) 30%,
+    rgba(255, 255, 255, 0.78) 45%,
+    rgba(255, 255, 255, 0.65) 60%,
+    rgba(255, 255, 255, 0.5) 75%,
+    rgba(255, 255, 255, 0.32) 88%,
+    transparent 100%
+  );
+
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+/* ========== MOBILE RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .chroma-grid-wrapper {
+    overflow-x: visible;
+    overflow-y: visible;
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+
+  .chroma-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-auto-columns: unset;
+    grid-auto-flow: dense;
+    gap: 1rem;
+    padding: 0;
+    max-width: 500px;
+    box-sizing: border-box;
+    --r: 80px;
+  }
+
+  .chroma-card {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .chroma-img-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chroma-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+  }
+
+  .chroma-info {
+    display: none;
+  }
+
+  .chroma-overlay {
+    display: none;
+  }
+
+  .chroma-fade {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .chroma-grid {
+    grid-auto-columns: 240px;
+    gap: 0.7rem;
+    --r: 200px;
+  }
+
+  .chroma-card {
+    width: 240px;
+  }
+
+  .chroma-img-wrapper {
+    height: 240px;
+  }
+}
