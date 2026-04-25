@@ -1,1 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sonara — Premium Music, Zero Subscription</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ============ RESET (scoped) ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:var(--lh-normal);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 
+/* ============ NAV ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:var(--z-nav);background:rgba(255,255,255,.85);backdrop-filter:var(--blur-nav);-webkit-backdrop-filter:var(--blur-nav);border-bottom:1px solid var(--border);transition:transform .4s var(--ease-standard),box-shadow .3s var(--ease-standard);will-change:transform}
+.nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.nav-links a.active{opacity:1;color:var(--accent,#5227ff)}
+.nav-links a.active::after{content:"";display:block;height:2px;background:currentColor;margin-top:3px;border-radius:2px}
+.nav-inner{max-width:var(--content-max);margin:0 auto;padding:14px 28px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;gap:10px;align-items:center}
+.brand img{width:40px;height:40px;border-radius:50%;border:2px solid var(--fg);transition:transform .2s}
+.brand img:hover{transform:scale(1.08)}
+.brand h1{font-size:1.4rem;font-weight:800;letter-spacing:-.5px}
+.nav-links{display:flex;gap:28px;align-items:center;list-style:none}
+.nav-links a{font-weight:500;font-size:.95rem;transition:opacity .2s}
+.nav-links a:hover{opacity:.6}
+.nav-links .cta{background:var(--fg);color:var(--fg-inverse);padding:9px 20px;border-radius:var(--r-sm);font-weight:600;border:2px solid var(--fg);transition:all .2s}
+.nav-links .cta:hover{background:transparent;color:var(--fg);opacity:1}
+.menu-btn{display:none;background:none;border:0;font-size:1.4rem;color:var(--fg)}
+@media (max-width:768px){
+  .nav-links{position:fixed;top:68px;left:0;right:0;background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);flex-direction:column;gap:0;padding:0;max-height:0;overflow:hidden;transition:max-height .3s}
+  .nav-links.open{max-height:400px}
+  .nav-links li{width:100%}
+  .nav-links a{display:block;padding:16px 28px;border-bottom:1px solid var(--border)}
+  .menu-btn{display:block}
+}
+
+/* ============ HERO ============ */
+.hero{min-height:100vh;display:grid;place-items:center;padding:120px 28px 64px;position:relative;background:linear-gradient(135deg,#fff 0%,#f4f4f4 100%);overflow:hidden;will-change:background-position}
+.hero::before{content:"";position:absolute;top:-20%;right:-10%;width:60vw;height:60vw;background:radial-gradient(circle,rgba(82,39,255,.06) 0%,transparent 70%);pointer-events:none}
+.hero-grid{max-width:var(--content-max);width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;position:relative;z-index:1}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:6px 14px;border-radius:9999px;background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.08);font-size:.8rem;font-weight:600;letter-spacing:.03em;margin-bottom:20px}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 0 4px rgba(16,185,129,.18)}
+.hero h1{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-1.5px;margin-bottom:20px}
+.hero h1 .accent{background:linear-gradient(90deg,#000 0%,#5227ff 60%,#ff2774 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:1.2rem;color:var(--fg-muted);margin-bottom:28px;max-width:460px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--fg);color:var(--fg-inverse);padding:14px 28px;border-radius:var(--r-sm);font-weight:600;font-size:1rem;border:2px solid var(--fg);transition:all .2s var(--ease-out);display:inline-flex;gap:8px;align-items:center}
+.btn-primary:hover{background:transparent;color:var(--fg);transform:translateY(-2px)}
+.btn-glass{padding:14px 28px;border-radius:var(--r-md);font-weight:600;font-size:1rem;background:rgba(255,255,255,.5);backdrop-filter:var(--blur-glass);-webkit-backdrop-filter:var(--blur-glass);border:1px solid rgba(0,0,0,.1);box-shadow:var(--shadow-glass-rest);color:var(--fg);transition:all .3s var(--ease-out);display:inline-flex;gap:8px;align-items:center}
+.btn-glass:hover{background:rgba(255,255,255,.7);transform:translateY(-2px);box-shadow:var(--shadow-glass-hover)}
+.hero-stats{display:flex;gap:32px;margin-top:40px;flex-wrap:wrap}
+.hero-stats .stat{display:flex;flex-direction:column}
+.hero-stats .n{font-size:1.6rem;font-weight:800;letter-spacing:-.5px}
+.hero-stats .l{font-size:.75rem;color:var(--fg-muted);letter-spacing:.03em;text-transform:uppercase;margin-top:2px}
+
+/* phone mock */
+.phone-stage{position:relative;display:flex;justify-content:center;align-items:center;perspective:1200px;min-height:520px}
+.phone{width:280px;height:560px;border-radius:40px;background:linear-gradient(180deg,#111 0%,#000 100%);padding:10px;box-shadow:0 40px 80px -20px rgba(0,0,0,.4),0 0 0 2px #1a1a1a,inset 0 2px 2px rgba(255,255,255,.1);transform:rotateY(-12deg) rotateX(4deg);transform-style:preserve-3d;transition:transform .6s var(--ease-spring);animation:phoneFloat 6s ease-in-out infinite}
+.phone:hover{transform:rotateY(-4deg) rotateX(0deg) translateY(-8px)}
+@keyframes phoneFloat{0%,100%{transform:rotateY(-12deg) rotateX(4deg) translateY(0)}50%{transform:rotateY(-12deg) rotateX(4deg) translateY(-14px)}}
+.phone-screen{width:100%;height:100%;border-radius:32px;background:linear-gradient(180deg,#1a0033 0%,#000 70%);overflow:hidden;position:relative;display:flex;flex-direction:column}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:88px;height:22px;background:#000;border-radius:12px;z-index:2}
+.ps-top{padding:38px 18px 0;color:#fff;display:flex;justify-content:space-between;font-size:10px;font-weight:600;opacity:.7}
+.ps-hero{padding:22px 18px 0;color:#fff}
+.ps-hero h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.ps-hero p{font-size:10px;opacity:.6}
+.ps-art{margin:14px 18px;aspect-ratio:1;border-radius:14px;background-size:cover;background-position:top center;position:relative;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.ps-track{padding:0 18px;color:#fff}
+.ps-track .t{font-size:13px;font-weight:700;margin-bottom:2px}
+.ps-track .a{font-size:10px;opacity:.6}
+.ps-progress{margin:14px 18px;height:3px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.ps-progress::after{content:"";display:block;width:38%;height:100%;background:#fff;border-radius:2px}
+.ps-times{padding:0 18px;display:flex;justify-content:space-between;color:#fff;opacity:.5;font-size:9px}
+.ps-controls{display:flex;gap:18px;justify-content:center;align-items:center;margin-top:18px;color:#fff}
+.ps-controls i{font-size:14px;opacity:.7}
+.ps-controls .play{width:42px;height:42px;border-radius:50%;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;opacity:1}
+.ps-controls .play i{font-size:14px;opacity:1}
+/* floating accent around phone */
+.orbit{position:absolute;border-radius:50%;pointer-events:none}
+.orbit.a{width:360px;height:360px;border:1px dashed rgba(0,0,0,.1);top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 30s linear infinite}
+.orbit.b{width:460px;height:460px;border:1px dashed rgba(82,39,255,.15);top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 50s linear infinite reverse}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.orbit .chip{position:absolute;top:-20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--border);padding:6px 12px;border-radius:9999px;font-size:.75rem;font-weight:600;box-shadow:var(--shadow-1);display:flex;gap:6px;align-items:center}
+.orbit.b .chip{top:auto;bottom:-20px;background:#000;color:#fff;border-color:#000}
+
+/* ============ SECTION SCAFFOLD ============ */
+section{padding:var(--section-pad-y) 28px;position:relative}
+.container{max-width:var(--content-max);margin:0 auto}
+.section-eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--fg-muted);text-align:center;margin-bottom:14px;text-transform:uppercase}
+.section-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;text-align:center;letter-spacing:-1px;margin-bottom:48px;line-height:1.1}
+.section-title.on-dark{color:var(--fg-inverse)}
+
+/* ============ FEATURES ============ */
+.features .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.feat{position:relative;padding:28px 24px;border-radius:var(--r-lg);border:1px solid var(--border);background:#fff;transition:transform var(--t-med) var(--ease-out),border-color var(--t-med),box-shadow var(--t-med);overflow:hidden}
+.feat::before{content:"";position:absolute;inset:-2px;background:conic-gradient(from var(--glow-angle,0deg),#5227ff,#da67ff,#ff2774,#5227ff);border-radius:18px;opacity:0;z-index:-1;filter:blur(20px);transition:opacity .3s}
+@media (hover:hover){
+  .feat:hover{transform:translateY(-6px);border-color:var(--fg);box-shadow:var(--shadow-2)}
+  .feat:hover::before{opacity:.35}
+}
+.feat .ic{width:48px;height:48px;border-radius:12px;background:var(--fg);color:var(--fg-inverse);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:16px}
+.feat h3{font-size:1.15rem;font-weight:700;margin-bottom:8px}
+.feat p{color:var(--fg-muted);font-size:.95rem;line-height:1.5}
+
+/* ============ MARQUEE / SOCIAL PROOF ============ */
+.marquee{padding:32px 0;background:#000;color:#fff;overflow:hidden;border-top:1px solid #111;border-bottom:1px solid #111}
+.marquee-track{display:flex;gap:48px;animation:marq 30s linear infinite;white-space:nowrap;font-size:1.3rem;font-weight:800;letter-spacing:-.5px}
+.marquee-track span{display:inline-flex;gap:48px;align-items:center}
+.marquee-track i{color:var(--fg-muted);font-size:.9rem}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ============ SHOWCASE (dark) ============ */
+.showcase{background:#000;color:#fff;position:relative;overflow:hidden}
+.showcase::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse 60% 40% at 20% 30%,rgba(218,103,255,.2) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 40% at 80% 70%,rgba(82,39,255,.2) 0%,transparent 60%),
+  radial-gradient(ellipse 40% 30% at 50% 100%,rgba(255,39,116,.15) 0%,transparent 60%);
+  pointer-events:none}
+.showcase .container{position:relative;z-index:1}
+.showcase-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;margin-top:32px;align-items:start}
+.tile-wall{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;perspective:1000px}
+.tile{aspect-ratio:1;border-radius:12px;background-size:cover;background-position:center;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:10px;color:#fff;box-shadow:0 12px 32px rgba(0,0,0,.3);transition:transform .3s var(--ease-spring)}
+.tile:hover{transform:translateY(-6px) scale(1.03)}
+.tile .mt{font-size:11px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6);text-align:center}
+.tile .ma{font-size:9px;opacity:.7;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.tile:nth-child(1){background:linear-gradient(135deg,#2a1a4a,#0d0d24);transform:rotate(-2deg)}
+.tile:nth-child(2){background:linear-gradient(135deg,#8b1538,#2a0a1a);transform:rotate(1deg)}
+.tile:nth-child(3){background:linear-gradient(135deg,#d97706,#451a03);transform:rotate(-1deg)}
+.tile:nth-child(4){background:linear-gradient(135deg,#065f46,#022c22);transform:rotate(2deg)}
+.tile:nth-child(5){background:linear-gradient(135deg,#1e40af,#0c1e3d);transform:rotate(1deg)}
+.tile:nth-child(6){background:linear-gradient(135deg,#701a75,#2c0a2f);transform:rotate(-2deg)}
+.tile:nth-child(7){background:linear-gradient(135deg,#7f1d1d,#200505);transform:rotate(2deg)}
+.tile:nth-child(8){background:linear-gradient(135deg,#0f766e,#042f2e);transform:rotate(-1deg)}
+.tile:nth-child(9){background:linear-gradient(135deg,#c2410c,#3d1308);transform:rotate(1deg)}
+.tile:nth-child(10){background:linear-gradient(135deg,#4338ca,#0f0b3d);transform:rotate(-2deg)}
+.tile:nth-child(11){background:linear-gradient(135deg,#be185d,#2d0818);transform:rotate(2deg)}
+.tile:nth-child(12){background:linear-gradient(135deg,#0369a1,#051f3d);transform:rotate(-1deg)}
+.desc-panel{background:rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:32px;box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 8px 32px rgba(0,0,0,.2)}
+.desc-panel h3{font-size:1.6rem;font-weight:700;margin-bottom:12px}
+.desc-panel p{color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:14px}
+.desc-panel p:last-child{margin-bottom:0}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+.kpi .n{font-size:1.7rem;font-weight:800;letter-spacing:-.5px}
+.kpi .l{font-size:.75rem;color:rgba(255,255,255,.6);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+
+/* ============ STEPS ============ */
+.steps{background:#000;color:#fff}
+.steps .container{max-width:820px}
+.step-card{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-xl);padding:36px}
+.step-ind{display:flex;align-items:center;gap:4px;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.1)}
+.step-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#222;color:#a3a3a3;font-weight:600;font-size:1rem;flex-shrink:0;transition:all .3s}
+.step-dot.active{background:var(--accent);color:#fff;box-shadow:0 0 24px var(--accent-glow);transform:scale(1.08)}
+.step-dot.done{background:var(--accent);color:#fff}
+.step-line{flex:1;height:2px;background:#52525b;border-radius:2px;position:relative;overflow:hidden}
+.step-line.active{background:var(--accent)}
+.step-body{min-height:120px}
+.step-body h3{font-size:1.5rem;font-weight:700;margin-bottom:10px}
+.step-body p{color:rgba(255,255,255,.72);line-height:1.6}
+.step-nav{display:flex;justify-content:space-between;margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+.step-nav .back{padding:10px 20px;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);color:rgba(255,255,255,.7);font-weight:500;transition:all .2s}
+.step-nav .back:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.step-nav .next{padding:11px 28px;background:var(--accent);border:0;border-radius:9999px;color:#fff;font-weight:600;transition:all .2s}
+.step-nav .next:hover{background:var(--accent-hover);box-shadow:0 0 20px var(--accent-glow)}
+.step-nav .next:active{transform:scale(.97)}
+
+/* ============ COMPARISON ============ */
+.compare .grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1100px;margin:0 auto}
+.compare-card{perspective:1000px}
+.compare-card-inner{padding:32px;border-radius:var(--r-lg);background:#fff;border:1px solid #e5e5e5;box-shadow:var(--shadow-1);transition:transform .4s var(--ease-spring),box-shadow .4s}
+.compare-card:hover .compare-card-inner{transform:rotateX(4deg) rotateY(-4deg) translateZ(12px);box-shadow:var(--shadow-3)}
+.compare-card.dark .compare-card-inner{background:#0a0a0a;color:#fff;border-color:#1a1a1a}
+.compare-card h3{font-size:1.6rem;font-weight:700;margin-bottom:22px;text-align:center;display:flex;gap:10px;justify-content:center;align-items:center}
+.compare-card.win h3{color:var(--success)}
+.compare-card.lose h3{color:var(--danger)}
+.compare-card ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.compare-card li{display:flex;gap:12px;align-items:flex-start;font-size:.95rem;transition:transform .2s}
+.compare-card li:hover{transform:translateX(4px)}
+.compare-card.win li i{color:var(--success);margin-top:2px;flex-shrink:0}
+.compare-card.lose li i{color:var(--danger);margin-top:2px;flex-shrink:0}
+@media (max-width:768px){.compare .grid{grid-template-columns:1fr}}
+
+/* ============ DEVELOPER ============ */
+.dev-card{max-width:400px;margin:0 auto;padding:32px;border-radius:var(--r-xl);background:linear-gradient(145deg,rgba(218,103,255,.05),rgba(82,39,255,.05));border:1px solid var(--border);text-align:center;position:relative;overflow:hidden}
+.dev-card::before{content:"";position:absolute;top:-50%;right:-20%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(82,39,255,.15),transparent 70%);filter:blur(20px)}
+.dev-card>*{position:relative}
+.dev-avatar{width:96px;height:96px;border-radius:50%;margin:0 auto 16px;background:linear-gradient(135deg,#5227ff,#da67ff);display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;font-weight:800;box-shadow:0 8px 24px rgba(82,39,255,.3)}
+.dev-handle{font-size:.85rem;color:var(--fg-muted);margin-bottom:4px;font-family:var(--font-mono)}
+.dev-name{font-size:1.4rem;font-weight:700;margin-bottom:4px}
+.dev-role{font-size:.95rem;color:var(--fg-muted);margin-bottom:16px}
+.dev-btn{padding:10px 22px;background:var(--fg);color:var(--fg-inverse);border-radius:9999px;font-weight:600;font-size:.9rem;display:inline-flex;gap:8px;align-items:center;transition:all .2s}
+.dev-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-1)}
+.dev-blurb{max-width:680px;margin:28px auto 0;text-align:center;color:var(--fg-muted);font-size:1rem;line-height:1.7}
+
+/* ============ DOWNLOAD ============ */
+.download{background:linear-gradient(135deg,#f8f8f8,#fff);text-align:center}
+.download .container{max-width:720px}
+.download p.lead{font-size:1.15rem;color:var(--fg-muted);margin:0 auto 28px;max-width:520px}
+.download-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.platforms{display:flex;gap:32px;justify-content:center;margin:32px 0;flex-wrap:wrap}
+.platform{display:flex;flex-direction:column;gap:10px;align-items:center;padding:20px;border-radius:var(--r-lg);border:2px solid var(--border);background:rgba(255,255,255,.6);min-width:128px;transition:all .3s}
+.platform:hover{transform:translateY(-4px);box-shadow:var(--shadow-2);border-color:rgba(0,0,0,.2)}
+.platform i{font-size:2.6rem}
+.platform .android{color:var(--platform-android)}
+.platform .apple{color:var(--platform-apple)}
+.platform .windows{color:var(--platform-windows)}
+.platform span{font-size:.78rem;font-weight:600;border-radius:9999px;padding:5px 14px}
+.platform .avail{background:var(--success-bg);color:var(--success-fg)}
+.platform .soon{background:var(--danger-bg);color:var(--danger-fg)}
+.security{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:8px}
+.security span{font-size:.85rem;font-weight:600;color:var(--fg-muted);padding:8px 16px;border:1px solid var(--border);border-radius:var(--r-sm);background:rgba(255,255,255,.6);display:inline-flex;gap:8px;align-items:center}
+
+/* ============ FOOTER ============ */
+.footer{background:#000;color:#fff;padding:40px 28px 24px}
+.footer-inner{max-width:var(--content-max);margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.footer-inner p{opacity:.6;font-size:.9rem}
+.footer-inner .links{display:flex;gap:22px;flex-wrap:wrap}
+.footer-inner a{font-size:.9rem;opacity:.7;transition:opacity .2s}
+.footer-inner a:hover{opacity:1}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:900px){
+  .hero-grid,.showcase-grid{grid-template-columns:1fr}
+  .tile-wall{grid-template-columns:repeat(3,1fr)}
+  .phone-stage{min-height:440px}
+  .orbit{display:none}
+}
+@media (max-width:560px){
+  section{padding:var(--section-pad-y-m) 20px}
+  .hero{padding:96px 20px 48px}
+  .hero h1{font-size:2.2rem}
+  .tile-wall{grid-template-columns:repeat(3,1fr);gap:10px}
+  .nav-inner{padding:12px 20px}
+  .hero-stats{gap:20px}
+}
+
+/* ============ ENTRY ANIM ============ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ CURSOR SPARK ============ */
+.spark-canvas{position:fixed;inset:0;pointer-events:none;z-index:var(--z-cursor)}
+
+/* ============ SCROLL PROGRESS BAR ============ */
+.scroll-bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:10000;pointer-events:none;background:transparent}
+.scroll-bar::after{content:"";display:block;height:100%;width:var(--p,0%);background:linear-gradient(90deg,#5227ff,#da67ff,#ff2774);box-shadow:0 0 10px rgba(82,39,255,.6);transition:width .05s linear}
+
+/* ============ SCROLL CUE ============ */
+.scroll-cue{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px;align-items:center;color:var(--fg-muted);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;opacity:.7;transition:opacity .4s;pointer-events:none;z-index:2}
+.scroll-cue.hide{opacity:0}
+.scroll-cue .mouse{width:22px;height:34px;border:2px solid currentColor;border-radius:12px;position:relative}
+.scroll-cue .mouse::after{content:"";position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:6px;background:currentColor;border-radius:2px;animation:mwheel 1.8s ease-in-out infinite}
+@keyframes mwheel{0%{transform:translate(-50%,0);opacity:1}60%{transform:translate(-50%,10px);opacity:0}100%{transform:translate(-50%,0);opacity:0}}
+
+/* ============ MAGNETIC CARDS (features) ============ */
+.feat{transform-style:preserve-3d;will-change:transform}
+.feat{transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0)}
+
+/* ============ SHOWCASE TILE STAGGERED ENTRY ============ */
+.tile{opacity:0;transform:rotate(var(--base-rot,0deg)) translateY(30px) scale(.9);transition:opacity .7s var(--ease-out),transform .7s var(--ease-spring)}
+.tile.in{opacity:1;transform:rotate(var(--base-rot,0deg)) translateY(0) scale(1)}
+.tile:nth-child(1){--base-rot:-2deg;transition-delay:.05s}
+.tile:nth-child(2){--base-rot:1deg;transition-delay:.1s}
+.tile:nth-child(3){--base-rot:-1deg;transition-delay:.15s}
+.tile:nth-child(4){--base-rot:2deg;transition-delay:.2s}
+.tile:nth-child(5){--base-rot:1deg;transition-delay:.25s}
+.tile:nth-child(6){--base-rot:-2deg;transition-delay:.3s}
+.tile:nth-child(7){--base-rot:2deg;transition-delay:.35s}
+.tile:nth-child(8){--base-rot:-1deg;transition-delay:.4s}
+.tile:nth-child(9){--base-rot:1deg;transition-delay:.45s}
+.tile:nth-child(10){--base-rot:-2deg;transition-delay:.5s}
+.tile:nth-child(11){--base-rot:2deg;transition-delay:.55s}
+.tile:nth-child(12){--base-rot:-1deg;transition-delay:.6s}
+
+/* ============ COMPARE SCROLL-IN SPLIT ============ */
+.compare .grid .compare-card{opacity:0;transition:opacity .7s var(--ease-out),transform .9s var(--ease-spring)}
+.compare .grid .compare-card.win{transform:translateX(-60px)}
+.compare .grid .compare-card.lose{transform:translateX(60px)}
+.compare .grid .compare-card.in{opacity:1;transform:translateX(0)}
+
+/* ============ COUNT-UP STATS ============ */
+.hero-stats .n,.kpi .n{display:inline-block}
+
+/* ============ SECTION BG BLEED ============ */
+.showcase{background:#000;transition:background .6s}
+body{transition:background-color .6s}
+
+/* ============ MARQUEE DYNAMIC ============ */
+.marquee-track{animation-duration:30s;animation-play-state:running}
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#000">
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sonaraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#5227ff;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#da67ff;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#ff2774;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <circle cx="100" cy="100" r="95" fill="none" stroke="url(#sonaraGrad)" stroke-width="3" opacity="0.8"/>
+    <circle cx="100" cy="100" r="70" fill="none" stroke="url(#sonaraGrad)" stroke-width="2" opacity="0.5"/>
+    <path d="M 70 100 L 130 70 L 130 130 Z" fill="url(#sonaraGrad)" opacity="0.9"/>
+    <text x="100" y="160" font-family="sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Sonara</text>
+  </svg>
+</template>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="scroll-bar" id="scrollBar"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="brand">
+      <img src="../../assets/logo.png" alt="Sonara logo">
+      <h1>Sonara</h1>
+    </a>
+    <button class="menu-btn" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')"><i class="fas fa-bars"></i></button>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#showcase">Library</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#compare">Compare</a></li>
+      <li><a href="#download" class="cta">Download</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span>APK v1.2 · Android Available</div>
+      <h1>Premium music,<br><span class="accent">zero subscription.</span></h1>
+      <p class="lead">Sonara is a lightweight, ad-free streaming app built for real music lovers. Millions of tracks. Offline downloads. No monthly bill, ever.</p>
+      <div class="hero-ctas">
+        <a href="#download" class="btn-primary"><i class="fab fa-android"></i>Download APK</a>
+        <a href="https://github.com/MatEdra/Sonara" class="btn-glass"><i class="fab fa-github"></i>View on GitHub</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="n" data-count="100" data-suffix="%">0%</span><span class="l">Free forever</span></div>
+        <div class="stat"><span class="n" data-count="0" data-suffix="">0</span><span class="l">Ads shown</span></div>
+        <div class="stat"><span class="n" data-count="8" data-prefix="<" data-suffix="MB">&lt;0MB</span><span class="l">APK size</span></div>
+      </div>
+    </div>
+    <div class="phone-stage">
+      <div class="orbit a"><span class="chip"><i class="fas fa-music" style="color:#5227ff"></i>Now Playing</span></div>
+      <div class="orbit b"><span class="chip"><i class="fas fa-download"></i>Offline Ready</span></div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="notch"></div>
+          <div class="ps-top"><span>9:41</span><span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span></div>
+          <div class="ps-hero"><h4>Now Playing</h4><p>From your Daily Mix</p></div>
+          <div class="ps-art" style="background:url('../../Screenshots/Screenshot_20260416_193527.png') center/cover no-repeat;border-radius:14px"></div>
+          <div class="ps-track"><div class="t">Sanctuary</div><div class="a">Joji</div></div>
+          <div class="ps-progress"></div>
+          <div class="ps-times"><span>1:14</span><span>3:20</span></div>
+          <div class="ps-controls">
+            <i class="fas fa-random"></i>
+            <i class="fas fa-backward-step"></i>
+            <div class="play"><i class="fas fa-pause"></i></div>
+            <i class="fas fa-forward-step"></i>
+            <i class="fas fa-repeat"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue" id="scrollCue"><div class="mouse"></div><span>Scroll</span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>FREE & NO ADS <i>·</i> OFFLINE READY <i>·</i> GLASSMORPHISM UI <i>·</i> YOUTUBE MUSIC <i>·</i> LIGHTWEIGHT <i>·</i> COMMUNITY FIRST <i>·</i></span>
+    <span>FREE & NO ADS <i>·</i> OFFLINE READY <i>·</i> GLASSMORPHISM UI <i>·</i> YOUTUBE MUSIC <i>·</i> LIGHTWEIGHT <i>·</i> COMMUNITY FIRST <i>·</i></span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features" class="features">
+  <div class="container">
+    <div class="section-eyebrow">Features</div>
+    <h2 class="section-title reveal">Everything you want.<br>Nothing you don't.</h2>
+    <div class="grid">
+      <div class="feat reveal"><div class="ic"><i class="fas fa-music"></i></div><h3>High Quality Audio</h3><p>Stream your favorite music in crystal clear quality on any device.</p></div>
+      <div class="feat reveal"><div class="ic"><i class="fas fa-download"></i></div><h3>Offline Listening</h3><p>Download tracks and play them anywhere — no connection required.</p></div>
+      <div class="feat reveal"><div class="ic"><i class="fas fa-bullseye"></i></div><h3>Smart Recommendations</h3><p>Discover new music tailored to the exact mood you're in.</p></div>
+      <div class="feat reveal"><div class="ic"><i class="fas fa-globe"></i></div><h3>Global Library</h3><p>Millions of tracks from mainstream and independent artists.</p></div>
+      <div class="feat reveal"><div class="ic"><i class="fas fa-share-nodes"></i></div><h3>Social Sharing</h3><p>Share playlists with friends and build collaborative sessions.</p></div>
+      <div class="feat reveal"><div class="ic"><i class="fas fa-bolt"></i></div><h3>Lightning Fast</h3><p>Optimized for low-end phones. Opens in under one second.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="showcase" class="showcase">
+  <div class="container">
+    <div class="section-eyebrow" style="color:rgba(255,255,255,.6)">Your library</div>
+    <h2 class="section-title on-dark reveal">Every artist, every era,<br>every mood.</h2>
+    <div class="showcase-grid">
+      <div class="tile-wall">
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/b/ba/Billie_Eilish_-_Ocean_Eyes.png');background-size:cover;background-position:center"><div class="mt">Ocean Eyes</div><div class="ma">Billie Eilish</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/3/33/Billie_Eilish_-_Bad_Guy.png');background-size:cover;background-position:center"><div class="mt">Bad Guy</div><div class="ma">Billie Eilish</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/4/4b/Billie_Eilish_-_Therefore_I_Am.png');background-size:cover;background-position:center"><div class="mt">Therefore I Am</div><div class="ma">Billie Eilish</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/4/4a/Joji_-_Glimpse_of_Us.png');background-size:cover;background-position:center"><div class="mt">Glimpse of Us</div><div class="ma">Joji</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/0/01/Slow_Dancing_in_the_Dark.jpg');background-size:cover;background-position:center"><div class="mt">Slow Dancing</div><div class="ma">Joji</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/a/ad/Joji_-_Run.png');background-size:cover;background-position:center"><div class="mt">Run</div><div class="ma">Joji</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/9/91/Imagine_Dragons_-_%22Radioactive%22_%28Single%29.jpg');background-size:cover;background-position:center"><div class="mt">Radioactive</div><div class="ma">Imagine Dragons</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/5/5c/Imagine-Dragons-Believer-art.jpg');background-size:cover;background-position:center"><div class="mt">Believer</div><div class="ma">Imagine Dragons</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/2/28/Imagine_Dragons_Thunder.jpg');background-size:cover;background-position:center"><div class="mt">Thunder</div><div class="ma">Imagine Dragons</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/0/0a/Justin_Bieber_-_Peaches.png');background-size:cover;background-position:center"><div class="mt">Peaches</div><div class="ma">Justin Bieber</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/d/dc/Justin_Bieber_-_Sorry_%28Official_Single_Cover%29.png');background-size:cover;background-position:center"><div class="mt">Sorry</div><div class="ma">Justin Bieber</div></div>
+        <div class="tile" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/e/e3/Superbass_single_cover.png');background-size:cover;background-position:center"><div class="mt">Super Bass</div><div class="ma">Nicki Minaj</div></div>
+      </div>
+      <aside class="desc-panel">
+        <h3>Infinite discovery, zero friction.</h3>
+        <p>From underground indie producers to chart-topping names, Sonara's catalog spans every genre, era, and style. Pop, hip-hop, OPM, classical, lo-fi — it's all here.</p>
+        <p>Our recommendation engine learns your taste as you listen. The more you play, the sharper it gets.</p>
+        <div class="kpi-row">
+          <div class="kpi"><div class="n">80M+</div><div class="l">Tracks</div></div>
+          <div class="kpi"><div class="n">12k+</div><div class="l">Artists featured</div></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="steps">
+  <div class="container">
+    <div class="section-eyebrow" style="color:rgba(255,255,255,.6)">How It Works</div>
+    <h2 class="section-title on-dark reveal">Four steps. Two minutes.</h2>
+    <div class="step-card reveal">
+      <div class="step-ind" id="stepInd"></div>
+      <div class="step-body" id="stepBody"></div>
+      <div class="step-nav"><button class="back" id="stepBack">Back</button><button class="next" id="stepNext">Next</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare" class="compare">
+  <div class="container">
+    <div class="section-eyebrow">Why Sonara</div>
+    <h2 class="section-title reveal">The math is simple.</h2>
+    <div class="grid">
+      <div class="compare-card win"><div class="compare-card-inner"><h3><i class="fas fa-check-circle"></i>Sonara</h3><ul>
+        <li><i class="fas fa-check-circle"></i>Free forever, no subscription</li>
+        <li><i class="fas fa-check-circle"></i>Zero ads, ever</li>
+        <li><i class="fas fa-check-circle"></i>Glassmorphism + iOS-style UI</li>
+        <li><i class="fas fa-check-circle"></i>Offline downloads built in</li>
+        <li><i class="fas fa-check-circle"></i>Lightweight — &lt;8MB install</li>
+        <li><i class="fas fa-check-circle"></i>Works on low-end phones</li>
+        <li><i class="fas fa-check-circle"></i>No account required</li>
+        <li><i class="fas fa-check-circle"></i>Community-built, open source</li>
+      </ul></div></div>
+      <div class="compare-card lose dark"><div class="compare-card-inner"><h3><i class="fas fa-times-circle"></i>Other Apps</h3><ul>
+        <li><i class="fas fa-times-circle"></i>$10–15 a month, forever</li>
+        <li><i class="fas fa-times-circle"></i>Audio ads between tracks</li>
+        <li><i class="fas fa-times-circle"></i>Bloated, slow on old devices</li>
+        <li><i class="fas fa-times-circle"></i>Downloads locked behind premium</li>
+        <li><i class="fas fa-times-circle"></i>Account + payment required</li>
+        <li><i class="fas fa-times-circle"></i>Tracks what you play</li>
+        <li><i class="fas fa-times-circle"></i>Ecosystem lock-in</li>
+        <li><i class="fas fa-times-circle"></i>Artist payouts you can't see</li>
+      </ul></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVELOPER -->
+<section>
+  <div class="container">
+    <div class="section-eyebrow">Meet the Developer</div>
+    <h2 class="section-title reveal">One-person team. All heart.</h2>
+    <div class="dev-card reveal">
+      <div class="dev-avatar">ME</div>
+      <div class="dev-handle">@MatEdra</div>
+      <div class="dev-name">Mat Edra</div>
+      <div class="dev-role">Lead Developer · Chamba Developer</div>
+      <a class="dev-btn" href="https://www.facebook.com/reymart.edra"><i class="fas fa-message"></i>Contact</a>
+    </div>
+    <p class="dev-blurb">Sonara is built and maintained by Mat Edra — a passionate developer who believes premium music shouldn't require a premium price tag. Always learning, always coding, always improving.</p>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section id="download" class="download">
+  <div class="container">
+    <div class="section-eyebrow">Ready to stream?</div>
+    <h2 class="section-title reveal">Download Sonara.</h2>
+    <p class="lead">Join thousands of listeners who ditched the subscription for something lighter, faster, and genuinely free.</p>
+    <div class="download-ctas">
+      <a class="btn-primary"><i class="fab fa-android"></i>Download APK</a>
+      <a class="btn-glass" href="https://github.com/MatEdra/Sonara"><i class="fab fa-github"></i>View on GitHub</a>
+    </div>
+    <div class="platforms">
+      <div class="platform"><i class="fab fa-android android"></i><span class="avail">Available</span></div>
+      <div class="platform"><i class="fab fa-apple apple"></i><span class="soon">Coming Soon</span></div>
+      <div class="platform"><i class="fab fa-windows windows"></i><span class="soon">Coming Soon</span></div>
+    </div>
+    <div class="security">
+      <span><i class="fas fa-shield-halved"></i>Safe & Secure</span>
+      <span><i class="fas fa-ban"></i>No Ads</span>
+      <span><i class="fas fa-heart"></i>Open Source</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p>© 2026 Sonara. Built with ♪ by Mat Edra.</p>
+    <div class="links"><a>Privacy</a><a>Terms</a><a>Contact</a><a>GitHub</a></div>
+  </div>
+</footer>
+
+<canvas class="spark-canvas" id="spark"></canvas>
+
+<script>
+// ---------- Reveal on scroll (cheap, one observer) ----------
+(() => {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+// ---------- Scroll effects (hide/show nav, shadow, parallax, active link) ----------
+(() => {
+  const nav = document.querySelector('.nav');
+  const hero = document.querySelector('.hero');
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastScroll = 0, ticking = false;
+
+  const onScroll = () => {
+    const y = window.pageYOffset;
+
+    // 1. Hide nav on scroll down, show on scroll up
+    if (y > lastScroll && y > 100) nav.style.transform = 'translateY(-100%)';
+    else nav.style.transform = 'translateY(0)';
+
+    // 2. Nav shadow after 50px
+    nav.classList.toggle('scrolled', y > 50);
+
+    // 3. Hero parallax (skip if reduced motion or off-screen)
+    if (hero && !reduced && y < window.innerHeight) {
+      hero.style.backgroundPosition = `0px ${y * 0.4}px`;
+    }
+
+    // 4. Active link based on section in view
+    let current = sections[0]?.id || '';
+    for (const s of sections) {
+      if (y >= s.offsetTop - 200) current = s.id;
+    }
+    for (const l of navLinks) {
+      l.classList.toggle('active', l.getAttribute('href').slice(1) === current);
+    }
+
+    lastScroll = Math.max(0, y);
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
+
+  // Scroll progress bar + cue hide (separate lightweight rAF)
+  const bar = document.getElementById('scrollBar');
+  const cue = document.getElementById('scrollCue');
+  let barTick = false;
+  window.addEventListener('scroll', () => {
+    if (barTick) return;
+    barTick = true;
+    requestAnimationFrame(() => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      if (bar) bar.style.setProperty('--p', p + '%');
+      if (cue) cue.classList.toggle('hide', h.scrollTop > 40);
+      barTick = false;
+    });
+  }, { passive: true });
+
+  // 5. Smooth anchor scroll (native — no GSAP dep)
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 60, behavior: reduced ? 'auto' : 'smooth' });
+      document.getElementById('navlinks')?.classList.remove('open');
+    });
+  });
+})();
+
+// ---------- Count-up stats (runs once on scroll into view) ----------
+(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = document.querySelectorAll('[data-count]');
+  const format = (el, v) => {
+    const pre = el.dataset.prefix || '';
+    const suf = el.dataset.suffix || '';
+    return pre + Math.round(v) + suf;
+  };
+  const animate = (el) => {
+    const target = parseFloat(el.dataset.count);
+    if (reduced || target === 0) { el.textContent = format(el, target); return; }
+    const dur = 1200, start = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    const tick = (now) => {
+      const t = Math.min((now - start) / dur, 1);
+      el.textContent = format(el, target * ease(t));
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); }
+  }, { threshold: 0.5 });
+  els.forEach(el => io.observe(el));
+})();
+
+// ---------- Tile stagger on scroll into showcase ----------
+(() => {
+  const tiles = document.querySelectorAll('.tile');
+  if (!tiles.length) return;
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { threshold: 0.2 });
+  tiles.forEach(t => io.observe(t));
+})();
+
+// ---------- Compare cards split-in ----------
+(() => {
+  const cards = document.querySelectorAll('.compare .compare-card');
+  if (!cards.length) return;
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { threshold: 0.3 });
+  cards.forEach(c => io.observe(c));
+})();
+
+// ---------- Magnetic feature cards (hover-capable pointers only) ----------
+(() => {
+  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  document.querySelectorAll('.feat').forEach(card => {
+    let raf = null;
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+        card.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+})();
+
+// ---------- Stepper ----------
+(() => {
+  const steps = [
+    { t: 'Download the APK', b: 'Grab the latest build from our download section. No account, no email capture — it\'s a direct APK file from GitHub.' },
+    { t: 'Allow install from unknown sources', b: 'Android asks for permission the first time you install a file outside the Play Store. One-time tap.' },
+    { t: 'Open Sonara and sign in', b: 'Optional. You can start listening immediately, or link your email to sync favorites across devices.' },
+    { t: 'Stream, download, enjoy', b: 'Search any track, hit download for offline, share playlists with friends. That\'s the whole flow.' },
+  ];
+  let i = 0;
+  const ind = document.getElementById('stepInd');
+  const body = document.getElementById('stepBody');
+  const back = document.getElementById('stepBack');
+  const next = document.getElementById('stepNext');
+  function render() {
+    ind.innerHTML = '';
+    for (let k = 0; k < steps.length; k++) {
+      const dot = document.createElement('div');
+      dot.className = 'step-dot' + (k < i ? ' done' : k === i ? ' active' : '');
+      dot.textContent = k < i ? '✓' : (k + 1);
+      ind.appendChild(dot);
+      if (k < steps.length - 1) {
+        const ln = document.createElement('div');
+        ln.className = 'step-line' + (k < i ? ' active' : '');
+        ind.appendChild(ln);
+      }
+    }
+    body.innerHTML = `<h3>${steps[i].t}</h3><p>${steps[i].b}</p>`;
+    back.style.visibility = i === 0 ? 'hidden' : 'visible';
+    next.textContent = i === steps.length - 1 ? 'Restart' : 'Next';
+  }
+  back.onclick = () => { if (i > 0) { i--; render(); } };
+  next.onclick = () => { i = (i + 1) % steps.length; render(); };
+  render();
+})();
+
+// ---------- Click spark (pointer-only, cheap canvas) ----------
+(() => {
+  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const c = document.getElementById('spark');
+  const ctx = c.getContext('2d');
+  const resize = () => { c.width = innerWidth * devicePixelRatio; c.height = innerHeight * devicePixelRatio; c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px'; ctx.scale(devicePixelRatio, devicePixelRatio); };
+  resize(); addEventListener('resize', resize);
+  let sparks = [];
+  addEventListener('click', (e) => {
+    for (let k = 0; k < 8; k++) {
+      const a = (k / 8) * Math.PI * 2;
+      sparks.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * 3, vy: Math.sin(a) * 3, life: 1 });
+    }
+  });
+  function loop() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    sparks = sparks.filter(s => s.life > 0);
+    for (const s of sparks) {
+      s.x += s.vx; s.y += s.vy; s.life -= 0.04;
+      ctx.strokeStyle = `rgba(0,0,0,${s.life})`;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 2, s.y - s.vy * 2); ctx.stroke();
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ---------- Feature card glow angle loop (hover only) ----------
+(() => {
+  if (!window.matchMedia('(hover:hover)').matches) return;
+  document.querySelectorAll('.feat').forEach((card) => {
+    let raf = null, angle = 0, running = false;
+    card.addEventListener('mouseenter', () => {
+      if (running) return;
+      running = true;
+      const tick = () => { angle = (angle + 1) % 360; card.style.setProperty('--glow-angle', angle + 'deg'); raf = requestAnimationFrame(tick); };
+      tick();
+    });
+    card.addEventListener('mouseleave', () => { running = false; if (raf) cancelAnimationFrame(raf); });
+  });
+})();
+</script>
+</body>
+</html>
